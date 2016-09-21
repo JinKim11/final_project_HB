@@ -27,12 +27,13 @@ def posting_to_twitter(tweets):
 		tweet_file = my_file.readlines()
 	for line in tweet_file:
 		line = line.strip(r'\n')
-		if len(line)<=140 and len(line)>0:
+		if tweet_file[len(tweet_file)] != line:
+			line = line + " [...]"
 			api.update_status(status = line)
-			with open ('tweet_archive.txt', 'w') as tweetfile:
-				tweet_file.remove(line)
-				tweetfile.writelines(tweet_file)
-			time.sleep(300)
+		with open ('tweet_archive.txt', 'w') as tweetfile:
+			tweet_file.remove(line)
+			tweetfile.writelines(tweet_file)
+		time.sleep(300)
 
 def main():
 	prep = preparing_text_file("tweet_archive.txt")
